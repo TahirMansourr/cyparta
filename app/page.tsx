@@ -23,10 +23,10 @@ export default async function Home() {
   console.log(user);
 
   return (
-    <div className=" flex flex-col">
-      <AvatarAndNotification/>
-      <ProfileHeaderComponent/>
-      <ProfileDetails/>
+    <div className=" flex flex-col p-8 w-full">
+      <AvatarAndNotification image = {user.image}/>
+      <ProfileHeaderComponent user = {user}/>
+      <ProfileDetails user = {user}/>
     </div>
   );
 }
