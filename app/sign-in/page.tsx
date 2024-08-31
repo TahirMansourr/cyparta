@@ -1,30 +1,35 @@
 'use client'
+import { handleSubmit, validate } from '@/Utils'
 import Image from 'next/image'
 import React, { FormEvent, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
-type userCrediantlsType ={
+type UserCrediantlsType ={
     email : string,
     password : string
 }
 
+type ErrorType = {
+    email?: string,
+    password?: string,
+    apiRes? : string    
+}
+
 const SignIn = () => {
 
-    const [userCredentials , setUserCredentials] = useState<userCrediantlsType>({
+    const [userCredentials , setUserCredentials] = useState<UserCrediantlsType>({
         email : '' ,
         password : ''  
     })
-    const [errors, setErrors] = useState<{ email?: string, password?: string , apiRes? : string }>({});
-    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState<ErrorType>({});
+    const [showPassword, setShowPassword] = useState<boolean>(false);
     
-
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserCredentials((prev) => ({
             ...prev,
             email: e.target.value 
         }));
     };
-
     
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserCredentials((prev) => ({
@@ -32,58 +37,6 @@ const SignIn = () => {
             password: e.target.value 
         }));
     };
-    
-    const validate = () => {
-        let valid = true;
-        let errors = {} as { email?: string, password?: string };
-
-        if (!userCredentials.email) {
-            errors.email = 'Email is required';
-            valid = false;
-        }
-
-        if (!userCredentials.password) {
-            errors.password = 'Password is required';
-            valid = false;
-        }
-
-        setErrors(errors);
-        return valid;
-    }
-
-
-    const handleSubmit = async (e : FormEvent)=>{
-        e.preventDefault();
-        
-        if (!validate()) {
-            return;
-        }
-        try {
-            const response = await fetch('https://cyparta-backend-gf7qm.ondigitalocean.app/api/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',  
-                },
-                body: JSON.stringify(userCredentials),  
-            });
-    
-           if(!response.ok){
-            const errorData = await response.json();
-            console.log(errorData);
-            
-            setErrors({apiRes : errorData.detail})
-            return
-           }
-    
-            const data = await response.json();
-            console.log(data);
-
-              
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-        }
-    }
-
 
   return (
     <main className='h-screen flex items-center justify-center'>
@@ -94,14 +47,14 @@ const SignIn = () => {
                  height={102} 
                  alt='logo'
                  />
-                 <form onSubmit={handleSubmit} className="w-full flex flex-col items-center">
+                 <form onSubmit={(e : React.FormEvent<HTMLFormElement>) => handleSubmit({userCredentials , setErrors , e})} className="w-full flex flex-col items-center">
                  <div className=' w-[545px] h-[96px] flex flex-col'>
                  
                  <label>Email Address</label>
                  <input 
                     value = {userCredentials?.email}
                     type='text'
-                    placeholder='Enter your name'
+                    placeholder='Enter your Email'
                     className='border  focus:outline-blue-500 py-2 rounded-lg p-1 '
                     onChange={handleEmailChange}
                     />
