@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 
-const UpdateProfileForm = ({ onClose }: { onClose: () => void }) => {
+const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | undefined, onClose: () => void }) => {
     const [formValue, setFormValues] = useState({
         first_name: '',
         last_name: '',
@@ -11,7 +11,7 @@ const UpdateProfileForm = ({ onClose }: { onClose: () => void }) => {
     })
     const [error, setError] = useState<string | null>(null);
 
-    const token = `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN_UPDATE}`;
+    const token = `Bearer ${refreshToken}`;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

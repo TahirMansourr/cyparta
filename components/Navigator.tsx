@@ -12,7 +12,7 @@ const Navigator = () => {
     <div className={`${lexend.className} flex items-center gap-2 mb-3`}>
 
             <p>{firstNavigator}</p>
-           {secondNavigator ? <FaChevronRight /> : null}
+                {secondNavigator ? <FaChevronRight /> : null}
             <p>{secondNavigator}</p>
         </div>
   )

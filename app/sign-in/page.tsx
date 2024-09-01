@@ -39,16 +39,17 @@ const SignIn = () => {
     };
 
   return (
-    <main className='h-screen flex items-center justify-center'>
-        <section className="flex flex-col border shadow-sm bg-[#E9E9E9] w-[616px] h-[489px] rounded-lg items-center" >
+    <main className='h-screen flex flex-grow items-center justify-center'>
+        <section className="flex flex-col  rounded-lg items-center" >
             <Image 
                  src ={Company_logo}
                  width={225} 
                  height={102} 
                  alt='logo'
                  />
+                 <div className=' shadow-sm p-8 py-12 border rounded-md flex item flex-col justify-center'>
                  <form onSubmit={(e : React.FormEvent<HTMLFormElement>) => handleSubmit({userCredentials , setErrors , e})} className="w-full flex flex-col items-center">
-                 <div className=' w-[545px] h-[96px] flex flex-col'>
+                 <div className=' w-[545px] h-[96px] flex flex-col  '>
                  
                  <label>Email Address</label>
                  <input 
@@ -82,7 +83,9 @@ const SignIn = () => {
                  </div>
                  {errors.apiRes && <span className="text-red-500 mx-auto text-lg p-2 rounded-md shadow-md mb-2 border border-red-500">{errors.apiRes}</span>}
             <button type='submit' className=' w-[445px] h-[56px] rounded-[10px] bg-black text-white shadow-sm mt-[10px]'>Login</button>
-            </form>
+                 </form>
+                 </div>
+                 
         </section>
     </main>
   )

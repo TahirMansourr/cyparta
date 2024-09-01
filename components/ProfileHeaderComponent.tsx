@@ -9,13 +9,17 @@ import UpdateProfileForm from './UpdateProfileForm'
 import { Lexend } from 'next/font/google'
 const lexend = Lexend({ weight: "600", subsets: ["latin"] })
 
-const ProfileHeaderComponent = ({user} : {user : any}) => {
+const ProfileHeaderComponent = ({user , refreshToken} : {user : any , refreshToken : string | undefined }) => {
    const [openForm , setOpenForm] = useState<boolean>(false)
    
   return (
     <section className='w-[924px] border-b-[1px] border-b-[#A2A1A8] pb-8'>
         <Navigator/>
-        {openForm ?<UpdateProfileForm onClose={() =>setOpenForm(false)}/> : null}
+        {openForm ?
+            <UpdateProfileForm 
+                onClose={() =>setOpenForm(false)}
+                refreshToken={refreshToken}
+                /> : null}
         <div className={` flex justify-between items-end`}>
             <div className='flex gap-2'>
                 <Image
