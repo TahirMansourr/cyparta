@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.sideBarItem-before{
+  @apply flex items-center justify-between transition-all duration-200 ease-in-out hover:cursor-pointer 
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

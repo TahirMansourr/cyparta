@@ -1,5 +1,5 @@
 'use client'
-import { handleSubmit, validate } from '@/Utils'
+import { Company_logo, handleSubmit, validate } from '@/Utils'
 import Image from 'next/image'
 import React, { FormEvent, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
@@ -42,7 +42,7 @@ const SignIn = () => {
     <main className='h-screen flex items-center justify-center'>
         <section className="flex flex-col border shadow-sm bg-[#E9E9E9] w-[616px] h-[489px] rounded-lg items-center" >
             <Image 
-                 src={'https://s3-alpha-sig.figma.com/img/3842/b99f/e7003b653626b4899b379c517657a039?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pBTSOzEn~FD9iXS-GMbwjjAm-IjFyFUdKPVsOz8vMnqBsEMauW3wPBpDO~LK-G4Hy3uk3Riiv~sqg~R6cU69KEoxhfUYH~nGF1HMBRX-4fcFoRyu7YoZ0CcT-plje1QFw6DTZcPMK24dw2iUk6dBSOxlQCfJoij4VmhX3xG4-UKa85KbQHOJ5zDnv15eUc~UBCSGDlQbFgJEsZY2gOwKjTvKtOCjH010jxw-u-Ki0truFAJ0thzXNraE0czLDrukJrxAPPyQp5zZSfs6YSH81rzlTNEZFjYrzc5XOXzz71hjIY4~rUks~IqZ780CX~nsc9mGQJrDYyUDQ4eMX4X93Q__' }
+                 src ={Company_logo}
                  width={225} 
                  height={102} 
                  alt='logo'

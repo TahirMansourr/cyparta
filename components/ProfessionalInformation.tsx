@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProfessionalInformation = () => {
   return (
-    <div>ProfessionalInformation</div>
+    <div className=' font-bold flex items-center  mt-10 text-lg'>Professional Information</div>
   )
 }
 

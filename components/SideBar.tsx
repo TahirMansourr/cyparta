@@ -11,15 +11,26 @@ import { PiScrollLight } from "react-icons/pi";
 import { CiDollar } from "react-icons/ci";
 import { TbCheckupList } from "react-icons/tb";
 import { PiWallet } from "react-icons/pi";
+import { usePathname, useRouter } from 'next/navigation';
+import { Company_logo } from '@/Utils';
+import { useNavigationContext } from '@/Context';
+import { Lexend } from 'next/font/google';
+import '../app/globals.css'
+const lexend = Lexend({ weight: "500", subsets: ["latin"] })
 
 const SideBar = () => {
-    const [accordionState , setAccordionState] = useState<boolean>(false)
-    const [ holidayState , setHolidayState] = useState<boolean>(false)
+    const pathname = usePathname()
+    const [accordionState , setAccordionState] = useState<boolean>(pathname === '/' ? true : false)
+    console.log("🚀 ~ SideBar ~ accordionState:", accordionState)
+    const router = useRouter()
+    const {firstNavigator , setFirstNavigator , setSecondNavigator} = useNavigationContext()
+    
+
   return (
     <section className=' flex h-screen py-[20px] pl-[28px]'>
         <div className=' flex  flex-col h-full w-[300px] mx-3  border shadow-md rounded-3xl items-center'>
         <Image 
-          src={'https://s3-alpha-sig.figma.com/img/3842/b99f/e7003b653626b4899b379c517657a039?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=pBTSOzEn~FD9iXS-GMbwjjAm-IjFyFUdKPVsOz8vMnqBsEMauW3wPBpDO~LK-G4Hy3uk3Riiv~sqg~R6cU69KEoxhfUYH~nGF1HMBRX-4fcFoRyu7YoZ0CcT-plje1QFw6DTZcPMK24dw2iUk6dBSOxlQCfJoij4VmhX3xG4-UKa85KbQHOJ5zDnv15eUc~UBCSGDlQbFgJEsZY2gOwKjTvKtOCjH010jxw-u-Ki0truFAJ0thzXNraE0czLDrukJrxAPPyQp5zZSfs6YSH81rzlTNEZFjYrzc5XOXzz71hjIY4~rUks~IqZ780CX~nsc9mGQJrDYyUDQ4eMX4X93Q__' }
+          src={Company_logo}
           alt='logo'
           width={247}
           height={158}
@@ -29,46 +40,90 @@ const SideBar = () => {
          <p>Dashboard</p>
         </div>
         <div className='flex flex-col w-full gap-3'>
-            <div className={`flex items-center justify-between transition-all duration-200 ease-in-out hover:cursor-pointer 
-            ${accordionState ? 'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null}`}
-             onClick={()=>setAccordionState(!accordionState)}
+            <div className={` sideBarItem-before
+            ${firstNavigator === 'Employees' ?  'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null} ${lexend.className}`}
+             onClick={()=>{
+                setFirstNavigator('Employees')
+                setSecondNavigator('Profile')
+            }}
             >
-                <div className='flex items-center gap-3 px-3 pl-10 '>
+                <div className='flex items-center gap-3 px-3 pl-10 ' >
                 <IoIosPeople size={30} />
                 <p>Employees</p>
                 </div>
                 <div className=' pr-5' >
-                     {!accordionState ?   <FaChevronRight /> : <FaChevronDown /> }
+                {firstNavigator === 'Employees' ?  <FaChevronDown /> : <FaChevronRight />  }
                 </div>  
             </div>
     
-            <div className={`transition-all duration-200 ease-in-out ${accordionState ? 'flex flex-col  gap-2 mx-auto ' : 'hidden'}`}>
-                <div className='flex items-center gap-3'><IoPersonOutline/> <p>Profile</p></div>
-                <div className='flex items-center gap-3'><BiTask/> <p>Attendence</p></div>
-                <div className='flex items-center gap-3'><PiScrollLight/><p>Tasks</p></div>
+            <div className={`transition-all duration-200 ease-in-out hover:cursor-pointer ${firstNavigator === 'Employees' ? 'flex flex-col  gap-2 mx-auto ' : 'hidden'}`}>
+                <div 
+                    className={`flex items-center gap-3 ${pathname === '/' ? 'text-slate-500' : null}`}
+                 onClick={()=>{
+                    setSecondNavigator('Profile')
+                    router.push('/')
+                    }}>
+                    <IoPersonOutline/> 
+                    <p>Profile</p>
+                </div>
+                <div 
+                    className='flex items-center gap-3'
+                    onClick={()=>{
+                        setSecondNavigator('Attendence')
+                    }}
+                    >
+                    <BiTask/>
+                     <p>Attendence</p>
+                    </div>
+                <div className='flex items-center gap-3' onClick={()=>{setSecondNavigator('Tasks')}}><PiScrollLight/><p>Tasks</p></div>
             </div>
 
-            <div className='flex items-center gap-3 px-3 pl-10 '>
+            <div 
+            className={`flex items-center justify-between transition-all duration-200 ease-in-out hover:cursor-pointer 
+                ${firstNavigator === 'Payroll' ? 'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null}`}
+                 onClick={()=>{
+                    setFirstNavigator('Payroll')
+                    setSecondNavigator(null)
+                }}
+            >
+                <div className={` ${lexend.className} flex items-center gap-3 px-3 pl-10 `}>
                 <CiDollar size={30} />
                 <p>Payroll</p>
+                </div>
+                <div className=' pr-5' >
+                     {firstNavigator === 'Payroll' ? <FaChevronDown/> : <FaChevronRight /> }
+                </div> 
             </div>
 
             <div className={`flex items-center justify-between transition-all duration-200 ease-in-out hover:cursor-pointer 
-            ${holidayState ? 'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null}`}
-             onClick={()=>setHolidayState(!holidayState)}
+            ${firstNavigator === 'Holidays' ? 'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null} ${lexend.className}` }
+             onClick={()=>{
+                setFirstNavigator('Holidays')
+                setSecondNavigator(null)
+            }}
             >
                 <div className='flex items-center gap-3 px-3 pl-10 '>
                 <TbCheckupList size={30}/>
                 <p>Holidays</p>
                 </div>
                 <div className=' pr-5' >
-                     {!holidayState ?   <FaChevronRight /> : <FaChevronDown /> }
+                     {firstNavigator === 'Holidays' ?  <FaChevronDown /> : <FaChevronRight />   }
                 </div>  
             </div>
     
-            <div className='flex items-center gap-3 px-3 pl-10'>
-                <PiWallet size={30} />
-                <p>Advanced Payment</p>
+            <div className={`flex items-center justify-between transition-all duration-200 ease-in-out hover:cursor-pointer 
+            ${firstNavigator === 'Advanced Payments' ? 'border-l-4 border-l-red-600 bg-[#F9EAEB] text-[#EE232F] py-2 rounded-r-xl': null} ${lexend.className}`} 
+            onClick={()=>{
+                setFirstNavigator('Advanced Payments')
+                setSecondNavigator(null)
+                }}>
+                     <div className='flex items-center gap-3 px-3 pl-10 '>
+                     <PiWallet size={30} />
+                     <p>Advanced Payments</p>
+                     </div>
+                     <div className=' pr-5' >
+                     {firstNavigator === 'Advanced Payments' ?  <FaChevronDown /> : <FaChevronRight />  }
+                </div>  
             </div>
 
             

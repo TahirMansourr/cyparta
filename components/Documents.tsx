@@ -2,7 +2,7 @@ import React from 'react'
 
 const Documents = () => {
   return (
-    <div>Documents</div>
+    <div className=' font-bold flex items-center  mt-10 text-lg'>Documents</div>
   )
 }
 

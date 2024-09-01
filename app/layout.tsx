@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
 import SideBar from "@/components/SideBar";
+import NavigationProvider from "@/Context";
 
 const inter = Inter({ subsets: ["latin"] });
+const lexend = Lexend({ weight: "300", subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "cyparta-login",
@@ -17,9 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex`}>
-        <SideBar/>
-        {children}
+      <body className={`${lexend.className} flex`}>
+        <NavigationProvider>
+          <SideBar/>
+          {children}
+        </NavigationProvider>
         </body>
     </html>
   );
