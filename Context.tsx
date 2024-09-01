@@ -1,3 +1,10 @@
+/**
+ * This context is for the handling the states in the sideMenu and in the Navigator component for better UI and user experience.
+ * It only Holds two state @param firstNavigator and @param secondNavigator and their setters and provides them to consumers which
+ * Consumers of this context are  SideBar component and Navigator component 
+
+ */
+
 'use client'
 import { createContext, useContext, useState } from "react";
 
