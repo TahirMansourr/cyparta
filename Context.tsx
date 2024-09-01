@@ -18,7 +18,6 @@ export const useNavigationContext = () =>{
 
 const NavigationProvider = ({children}: {children: React.ReactNode}) => {
     const [firstNavigator, setFirstNavigator] = useState<FirstNavigatorType>('Employees')
-    console.log("🚀 ~ NavigationProvider ~ firstNavigator:", firstNavigator)
     const [secondNavigator, setSecondNavigator] = useState<SecondNavigatorType>('Profile')
 
     const value = {
