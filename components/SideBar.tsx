@@ -19,10 +19,8 @@ import '../app/globals.css';
 const lexend = Lexend({ weight: "500", subsets: ["latin"] });
 
 const SideBar = () => {
-    const pathname = usePathname();
-    const [accordionState, setAccordionState] = useState<boolean>(pathname === '/');
     const router = useRouter();
-    const { firstNavigator, setFirstNavigator, setSecondNavigator } = useNavigationContext();
+    const { firstNavigator,secondNavigator , setFirstNavigator, setSecondNavigator } = useNavigationContext();
 
     return (
         <section className='flex h-screen py-[20px] pl-[28px]'>
@@ -56,7 +54,7 @@ const SideBar = () => {
 
                     <div className={`transition-all duration-200 ease-in-out hover:cursor-pointer ${firstNavigator === 'Employees' ? 'flex flex-col gap-2 mx-auto' : 'hidden'}`}>
                         <div 
-                            className={`flex items-center gap-3 ${pathname === '/' ? 'text-slate-500' : ''}`} 
+                            className={`flex items-center gap-3 ${secondNavigator === 'Profile' ? 'text-slate-500' : ''}`} 
                             onClick={() => {
                                 setSecondNavigator('Profile');
                                 router.push('/');
@@ -66,7 +64,7 @@ const SideBar = () => {
                             <p>Profile</p>
                         </div>
                         <div 
-                            className='flex items-center gap-3' 
+                            className={`flex items-center gap-3 ${secondNavigator === 'Attendence' ? 'text-slate-500' : ''}`}  
                             onClick={() => {
                                 setSecondNavigator('Attendence');
                             }}
@@ -74,7 +72,8 @@ const SideBar = () => {
                             <BiTask />
                             <p>Attendance</p>
                         </div>
-                        <div className='flex items-center gap-3' onClick={() => { setSecondNavigator('Tasks'); }}>
+                        <div className={`flex items-center gap-3 ${secondNavigator === 'Tasks' ? 'text-slate-500' : ''}`}  
+                             onClick={() => { setSecondNavigator('Tasks'); }}>
                             <PiScrollLight />
                             <p>Tasks</p>
                         </div>

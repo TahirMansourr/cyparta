@@ -1,25 +1,33 @@
 'use client'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CiEdit } from 'react-icons/ci'
-import { FaChevronRight } from 'react-icons/fa'
 import { MdOutlineMail } from 'react-icons/md'
 import Navigator from './Navigator'
 import UpdateProfileForm from './UpdateProfileForm'
 import { Lexend } from 'next/font/google'
 const lexend = Lexend({ weight: "600", subsets: ["latin"] })
 
-const ProfileHeaderComponent = ({user , refreshToken} : {user : any , refreshToken : string | undefined }) => {
-   const [openForm , setOpenForm] = useState<boolean>(false)
+interface Props {
+    user: any;
+    refreshToken: string | undefined;
+}
+
+const ProfileHeaderComponent = ({user , refreshToken} : Props) => {
+  
+    const [openForm , setOpenForm] = useState<boolean>(false)
    
   return (
     <section className='w-[924px] border-b-[1px] border-b-[#A2A1A8] pb-8'>
         <Navigator/>
-        {openForm ?
+        {
+        openForm ?
             <UpdateProfileForm 
                 onClose={() =>setOpenForm(false)}
                 refreshToken={refreshToken}
-                /> : null}
+                /> 
+                : null
+            }
         <div className={` flex justify-between items-end`}>
             <div className='flex gap-2'>
                 <Image

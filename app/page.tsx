@@ -20,7 +20,7 @@ export default async function Home() {
     return (
       <div className=" w-full h-screen flex justify-center items-center text-lg font-bold">
         <div className=" flex flex-col">
-            <p>Error fetching profile , try signing in again </p>
+            <p>Error fetching profile , try signing in again. </p>
             <p>  If you still keep getting the error after signing In, there are some issues sometimes with the API, please try agian later</p>
         </div>
         </div>
@@ -28,8 +28,6 @@ export default async function Home() {
   }
 
   const user = await userProfileData.json();
-  console.log(user);
-
   return (
     <div className=" flex flex-col px-8 py-4 w-full">
         <AvatarAndNotification image = {user.image}/>
