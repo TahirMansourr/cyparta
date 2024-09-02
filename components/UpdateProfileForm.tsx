@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Spinner from './Spinner';
+import { IoCloseOutline } from 'react-icons/io5';
 
 const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | undefined, onClose: () => void }) => {
     const [formValue, setFormValues] = useState({
@@ -61,9 +62,9 @@ const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | u
                     <button 
                         type="button" 
                         onClick={onClose} 
-                        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                        className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-lg" 
                     >
-                        &times; 
+                       <IoCloseOutline size={20} /> 
                     </button>
                     <div>
                         <label>First Name</label>
