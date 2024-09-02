@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
 export default async function Home() {
   const cookieStore = cookies();
   const access_token = cookieStore.get('access_token')?.value; 
-  const refresh_token = cookieStore.get('refresh_token')?.value;
   const token =  `Bearer ${access_token} `
   const userProfileData = await fetch('https://cyparta-backend-gf7qm.ondigitalocean.app/api/profile/', {
     method: 'GET',
@@ -31,7 +30,7 @@ export default async function Home() {
   return (
     <div className=" flex flex-col px-8 py-4 w-full">
         <AvatarAndNotification image = {user.image}/>
-        <ProfileHeaderComponent refreshToken = {refresh_token} user = {user}/>
+        <ProfileHeaderComponent refreshToken = {access_token} user = {user}/>
         <ProfileDetails user = {user}/>
     </div>
   );

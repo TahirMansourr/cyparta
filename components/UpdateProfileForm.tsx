@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import Spinner from './Spinner';
 
 const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | undefined, onClose: () => void }) => {
     const [formValue, setFormValues] = useState({
@@ -10,11 +11,13 @@ const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | u
         bio: ''
     })
     const [error, setError] = useState<string | null>(null);
+    const [loading , setLoading] = useState<boolean>(false)
 
     const token = `Bearer ${refreshToken}`;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
         setError(null);
 
         try {
@@ -38,8 +41,10 @@ const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | u
                 }
                 return;
             }
+            if(response.ok){
             console.log(await response.json());
-            onClose();
+            setLoading(false);
+            onClose();}
 
         } catch (error: any) {
             setError('An unexpected error occurred.');
@@ -105,7 +110,7 @@ const UpdateProfileForm = ({ onClose , refreshToken}: { refreshToken: string | u
                             className="w-full border p-2 rounded-md"
                         />
                     </div>
-                    <button type="submit" className="mt-4 bg-black text-white p-2 rounded-md">Save</button>
+                    <button type="submit" className="mt-4 bg-black text-white p-2 rounded-md">{loading ? <Spinner/> : 'Update'}</button>
                     {error && <div className="mt-4 text-red-500">{error}</div>}
                 </section>
             </form>

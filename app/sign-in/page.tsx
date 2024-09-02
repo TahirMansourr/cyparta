@@ -1,6 +1,8 @@
 'use client'
+import Spinner from '@/components/Spinner'
 import { Company_logo, handleSubmit, validate } from '@/Utils'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
@@ -21,8 +23,10 @@ const SignIn = () => {
         email : '' ,
         password : ''  
     })
+    const router = useRouter()
     const [errors, setErrors] = useState<ErrorType>({});
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [loading ,setLoading] = useState<boolean>(false)
     
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserCredentials((prev) => ({
@@ -48,7 +52,15 @@ const SignIn = () => {
                  alt='logo'
                  />
                  <div className=' shadow-sm p-8 py-12 border rounded-md flex item flex-col justify-center'>
-                 <form onSubmit={(e : React.FormEvent<HTMLFormElement>) => handleSubmit({userCredentials , setErrors , e})} className="w-full flex flex-col items-center">
+                 <form onSubmit={ async (e : React.FormEvent<HTMLFormElement>) => {
+                     handleSubmit({userCredentials , setErrors , e , setLoading}).then((res) => {
+                        if(res?.status == 200){
+                            router.push('/')
+                     }})
+                    
+                    
+                }} 
+                    className="w-full flex flex-col items-center">
                  <div className=' w-[545px] h-[96px] flex flex-col  '>
                  
                  <label>Email Address</label>
@@ -82,7 +94,9 @@ const SignIn = () => {
                     
                  </div>
                  {errors.apiRes && <span className="text-red-500 mx-auto text-lg p-2 rounded-md shadow-md mb-2 border border-red-500">{errors.apiRes}</span>}
-            <button type='submit' className=' w-[445px] h-[56px] rounded-[10px] bg-black text-white shadow-sm mt-[10px]'>Login</button>
+            <button type='submit' className=' w-[445px] h-[56px] rounded-[10px] bg-black text-white shadow-sm mt-[10px]'>
+                {loading ? <Spinner/> : 'Login'}
+                </button>
                  </form>
                  </div>
                  

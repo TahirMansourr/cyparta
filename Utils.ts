@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export const validate = ({
     userCredentials  , 
     setErrors
@@ -25,13 +27,16 @@ export const validate = ({
 export const handleSubmit = async ({
     e,
     userCredentials  , 
-    setErrors
+    setErrors,
+    setLoading
 } : {
     e : React.FormEvent<HTMLFormElement>,
     userCredentials : {email : string, password :string} , 
-    setErrors : (errors : {})=>void
+    setErrors : (errors : {})=>void ,
+    setLoading : Dispatch<SetStateAction<boolean>>
 })=>{
     e.preventDefault();
+    setLoading(true)
     if (!validate({userCredentials , setErrors})) {
         return;
     }
@@ -55,9 +60,13 @@ export const handleSubmit = async ({
             method : 'POST' ,
             body : JSON.stringify({token : data.access , refresh : data.refresh})
         })
+
+        return {status : 200}
         
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+    }finally{
+        setLoading(false)
     }
 }
 
