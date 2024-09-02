@@ -8,8 +8,9 @@ git clone https://github.com/TahirMansourr/cyparta.git
 cd cyparta
 
 3-Install the project dependencies:
-Start the development server:
+npm install
 
-4-npm run dev
-Build the project for production:
+4-Start the development server:
+npm run dev
+
 
